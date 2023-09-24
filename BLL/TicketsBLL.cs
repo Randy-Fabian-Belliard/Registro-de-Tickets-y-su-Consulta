@@ -12,7 +12,7 @@ public class TicketsBLL
 
     public bool Guardar(Tickets Ticket)
     {
-        if (!Existe(Ticket.TicketId))
+        if (!Existe(Ticket.TicketsId))
             return Insertar(Ticket);
         else
             return Modificar(Ticket);
@@ -20,7 +20,7 @@ public class TicketsBLL
 
     public bool Existe(int TicketId)
     {
-        return _contexto.Tickets.Any(s => s.TicketId == TicketId);
+        return _contexto.Tickets.Any(s => s.TicketsId == TicketId);
     }
 
     private bool Insertar(Tickets Ticket)
@@ -53,7 +53,7 @@ public class TicketsBLL
          public Tickets? Buscar (int TicketsId){
 
         return _contexto.Tickets
-        .Where( O => O.TicketId == TicketsId)
+        .Where( O => O.TicketsId == TicketsId)
         .AsNoTracking()
         .SingleOrDefault();
     }
