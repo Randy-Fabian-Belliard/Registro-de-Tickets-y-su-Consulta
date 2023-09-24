@@ -28,9 +28,9 @@ public class ClientesBLL
         _contexto.Entry(clientes).State = EntityState.Modified;
         return _contexto.SaveChanges() > 0;
     }
-   public bool Guardar(Clientes cliente)
+    public bool Guardar(Clientes cliente)
     {
-     if(!ExisteNombre(cliente.Nombre) && !ExisteRnc(cliente.Rnc)  ){
+    if(!ExisteNombre(cliente.Nombre) && !ExisteRnc(cliente.Rnc)  ){
 
             if(!Existe(cliente.ClienteId))
             return Insertar(cliente);
@@ -42,7 +42,7 @@ public class ClientesBLL
     }
 
         public bool Eliminar(Clientes cliente){
-bool changes = false;
+        bool changes = false;
         try{
             _contexto.Entry(cliente).State = EntityState.Deleted;
             changes = _contexto.SaveChanges() > 0;
