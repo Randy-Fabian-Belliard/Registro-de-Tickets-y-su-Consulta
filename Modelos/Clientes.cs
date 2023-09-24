@@ -18,7 +18,7 @@ public class Clientes{
      [Required(ErrorMessage ="El Rnc es requerido")]
     public string  Rnc { get; set; } = string.Empty;
 
-    [Required(ErrorMessage ="El Email es requerido")]
+    [EmailAddress(ErrorMessage ="El Email es requerido")]
     public string ? Email { get; set; }
 
     [Required(ErrorMessage =" La direccion es requerido")]
