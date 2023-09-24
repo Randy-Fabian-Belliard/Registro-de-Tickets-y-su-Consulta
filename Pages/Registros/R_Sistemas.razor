@@ -1,0 +1,95 @@
+@page "/RegistroSistemas"
+@page "/RegistroSistemas/{SistemaId:int}"
+@inject SistemasBLL SistemasBLL
+
+
+<EditForm Model="Sistema" OnValidSubmit="Guardar">
+  <DataAnnotationsValidator/>
+
+ <div class ="card">
+        <div  class="card-header">
+            <h1>Registro de sistemas</h1>
+    </div>
+            
+    <div class="card-body">
+            <!-- Para el Id -->
+        <label class="form-label">Sistema Id</label>
+            <div id="inputId" class="input-group mb-3">
+                <InputNumber @bind-Value="Sistema.SistemaId" class="form-control"/>
+            <div class="input-group-append">
+        <button class="btn btn-info" type="button" @onclick= "Buscar" > <span class="oi oi-magnifying-glass"/></button>
+   </div>
+
+
+    <div>
+        <!-- Para el nombre -->
+        <label class="form-label">Nombre</label>
+            <InputText @bind-Value="Sistema.Nombre" class="form-control"/>
+            <ValidationMessage For="@(() => Sistema.Nombre)" />
+    </div>
+    </div>
+
+        <div class="card-footer">
+                <button type="button" class="btn btn-primary"@onclick="Nuevo"><i class="oi oi-file" />Nuevo</button>
+                <button type="submit" class="btn btn-success" @onclick="Guardar"><i class="oi oi-document" />Guardar</button>
+                <button type="button" class="btn btn-danger"@onclick="Eliminar"><i class="oi oi-trash" />Eliminar</button>
+        </div>
+    </div> 
+</div> 
+</EditForm>
+
+@code {
+    [Parameter]
+    public int? SistemaId { get; set; }
+    public Sistemas Sistema { get; set; } = new Sistemas();
+
+    protected override void OnInitialized()
+    {
+        if (SistemaId.HasValue)
+        {
+            Sistema.SistemaId = SistemaId.Value;
+            Buscar();
+        }
+    }
+    public void Buscar()
+    {
+        var sistemaEncontrado = SistemasBLL.Buscar(Sistema.SistemaId);
+        if (sistemaEncontrado != null)
+        {
+            Sistema = sistemaEncontrado;
+        }
+    }
+
+    public void Nuevo()
+    {
+        this.Sistema = new Sistemas();
+    }
+
+    public void Guardar()
+    {
+        if (!Validar())
+        {
+            return;
+        }
+
+        var guardo = SistemasBLL.Guardar(this.Sistema);
+        if (guardo)
+        {
+            Nuevo();
+        }
+    }
+
+    public void Eliminar()
+    {
+        Buscar();
+        if (SistemasBLL.Eliminar(this.Sistema))
+        {
+            Nuevo();
+        }
+    }
+
+    bool Validar()
+    {
+        return true;
+    }
+}
